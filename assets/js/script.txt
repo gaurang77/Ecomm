@@ -1,0 +1,32 @@
+ let cart = document.getElementById('cart-table');
+ let btn =Array.from(document.getElementsByClassName('buy'));
+
+ btn.forEach(b=>{
+   b.addEventListener('click',e=>{
+    let id = e.currentTarget.parentElement.id;
+    getPro(id).then(item =>{
+      console.log(item);
+    });
+   });
+ });
+
+ async function getPro(id){
+    console.log(id);
+    let form = new FormData();
+    let url ='http://localhost/Ecommerce/index.php/Product/getProduct';
+    form.append('id',id);
+    return await fetch(url,{
+       method:'POST',
+       body:form
+    }).then(res=>res.json()).catch(e => console.log(e));
+ }
+
+public function getProduct(){
+        
+        if($_POST['id']){
+            $id = $_POST['id'];
+            $result = $this->data->item($id);
+            $r = json_encode($result);
+            echo $r;
+        }
+    }
